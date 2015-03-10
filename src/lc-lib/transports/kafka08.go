@@ -45,7 +45,7 @@ type TransportKafka08 struct {
 	wait     sync.WaitGroup
 	shutdown chan interface{}
 
-	producer                *sarama.Producer
+	producer                sarama.Producer
 	producer_config         *sarama.Config
 	partitioner_constructor sarama.PartitionerConstructor
 	compression_codec       sarama.CompressionCodec
