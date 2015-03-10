@@ -213,8 +213,10 @@ func (t *TransportKafka08) disconnect() {
 	t.shutdown = nil
 
 	// Close kafka producer
-	if err := t.producer.Close(); err != nil {
-		log.Critical("Kafka producer could not be closed: %s", err.Error())
+	if t.producer != nil {
+		if err := t.producer.Close(); err != nil {
+			log.Critical("Kafka producer could not be closed: %s", err.Error())
+		}
 	}
 }
 
