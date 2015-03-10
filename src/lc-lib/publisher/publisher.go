@@ -250,7 +250,16 @@ PublishLoop:
 
 				// Wait for send signal again
 				input_toggle = nil
-
+			case data := <-p.transport.Read():
+				switch data.(type) {
+				case error:
+					err = data.(error)
+					log.Error("Error received from transport: %s", err.Error())
+					break SelectLoop
+				default:
+					log.Warning("unknown data received from transport")
+					break SelectLoop
+				}
 			case <-control_signal:
 				// If no pending payloads, simply end
 				if p.num_payloads == 0 {
